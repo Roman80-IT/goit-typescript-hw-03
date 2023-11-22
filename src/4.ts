@@ -51,8 +51,11 @@ class Person {
 abstract class House {
   protected door: boolean;
   protected tenants: Person[];
+  // protected tenants: Person[] = []; //* Варіант-1 - явно вказане дефолтне значення при визначенні властивості класу
 
-  constructor(protected key: Key) {}
+  constructor(protected key: Key) {
+    this.tenants = []; //* Варіант-2 - дефолтне значення в конструкторі
+  }
 
   comeIn(person: Person): void {
     if (this.door) {
