@@ -54,11 +54,20 @@ class Employee {
   }
 }
 
+//! Варіант 1
+// class Manager extends Employee {
+//   //* Конструктор класу Manager:
+//   constructor(name: string, department: string, salary: number) {
+//     //* Виклик конструктора суперкласу Employee:
+//     super(name, department, salary + 10000);
+//   }
+// }
+
+//! Варіант 2
 class Manager extends Employee {
-  // Конструктор класу Manager:
   constructor(name: string, department: string, salary: number) {
-    // Виклик конструктора суперкласу Employee:
-    super(name, department, salary + 10000);
+    super(name, department, salary);
+    this.salary += 1000;
   }
 }
 
