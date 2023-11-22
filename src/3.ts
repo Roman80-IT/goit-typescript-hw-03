@@ -29,13 +29,6 @@
 //   }
 // }
 
-// // тестування класу
-// const wizard = new Wizard('Merlin', 15);
-
-// wizard.introduce('I am the mighty wizard');
-// wizard.castSpell();
-// wizard.levelUp();  // Level up! New level is 16
-
 // ----------------------------------------------------
 
 //* Інтерфейс з характеристиками персонажа:
@@ -52,7 +45,6 @@ interface ISpellCaster {
 }
 
 //! Далі за умовою завдання:
-// Реалізація класу Wizard:
 class Wizard implements ICharacter, ISpellCaster {
   constructor(public name: string, public level: number) {
     if (this.level < 1) {
@@ -74,7 +66,7 @@ class Wizard implements ICharacter, ISpellCaster {
   }
 }
 
-// Тестування класу
+//! Тестування класу
 const wizard = new Wizard("Merlin", 15);
 
 wizard.introduce("I am the mighty wizard");

@@ -18,21 +18,16 @@ door, яка може бути відкрита (true), або закрита (f
 Реалізуйте метод openDoor у цьому класі. Якщо ключ, переданий цьому методу, збігається з ключем, збереженим як key, то двері відчиняються.
 
 Після реалізації всіх класів створіть об'єкти для кожного класу та спробуйте відтворити сценарій, в якому людина приходить додому.
-
 Наприклад, ось так:
 */
 // const key = new Key();
-
 // const house = new MyHouse(key);
 // const person = new Person(key);
-
 // house.openDoor(person.getKey());
-
 // house.comeIn(person);
 
 // ----------------------------------------------------------------
 
-// Клас Key
 class Key {
   private signature: number;
 
@@ -40,59 +35,44 @@ class Key {
     this.signature = Math.random();
   }
 
-  getSignature(): number {
+  public getSignature(): number {
     return this.signature;
   }
 }
 
-// Клас Person
 class Person {
-  private key: Key;
-
-  constructor(key: Key) {
-    this.key = key;
-  }
+  constructor(private key: Key) {}
 
   getKey(): Key {
     return this.key;
   }
 }
 
-// Абстрактний клас House
 abstract class House {
-  protected door: boolean = false;
-  protected key: Key;
-  protected tenants: Person[] = [];
+  protected door: boolean;
+  protected tenants: Person[];
 
-  constructor(key: Key) {
-    this.key = key;
-  }
-
-  abstract openDoor(key: Key): void;
+  constructor(protected key: Key) {}
 
   comeIn(person: Person): void {
     if (this.door) {
       this.tenants.push(person);
-      console.log(`${person.getKey().getSignature()} entered the house.`);
-    } else {
-      console.log("The door is closed. Cannot enter.");
     }
   }
+
+  public abstract openDoor(key: Key): void;
 }
 
-// Клас MyHouse успадковується від абстрактного класу House
+//* успадковується від абстрактного класу House
 class MyHouse extends House {
-  openDoor(key: Key): void {
-    if (key.getSignature() === this.key.getSignature()) {
+  public openDoor(key: Key): void {
+    if (this.key.getSignature() === key.getSignature()) {
       this.door = true;
-      console.log("The door is now open.");
-    } else {
-      console.log("Invalid key. The door remains closed.");
     }
   }
 }
 
-// Сценарій взаємодії
+//! Сценарій взаємодії
 const key = new Key();
 const house = new MyHouse(key);
 const person = new Person(key);
@@ -101,3 +81,82 @@ house.openDoor(person.getKey());
 house.comeIn(person);
 
 export {};
+
+//! Варіант 2 з поясненням
+// //* Клас Key
+// class Key {
+//   private signature: number;
+
+//  //* Конструктор генерує випадковий підпис для ключа при створенні нового об'єкта.
+//   constructor() {
+//     this.signature = Math.random();
+//   }
+
+// //* Метод getSignature повертає значення підпису ключа.
+//   getSignature(): number {
+//     return this.signature;
+//   }
+// }
+
+// //* Клас Person (людина)
+// //*    у нього є приватне поле key, що приймається через параметр конструктору.
+// class Person {
+//   private key: Key;
+
+// //* Конструктор отримує ключ і зберігає його у приватному полі:
+//   constructor(key: Key) {
+//     this.key = key;
+//   }
+
+// //*  повертаємо збережений ключ:
+//   getKey(): Key {
+//     return this.key;
+//   }
+// }
+
+// //* Абстрактний клас House (будинок)
+// //* захищені поля door (стан дверей), key (ключ), tenants (мешканці):
+// abstract class House {
+//   protected door: boolean = false;   //* Двері за замовчуванням закриті
+//   protected key: Key;                //* Ключ для відкриття дверей
+//   protected tenants: Person[] = [];  //* Масив мешканців будинку
+
+//* Конструктор отримує ключ як параметр і зберігає його у захищеному полі.
+//   constructor(key: Key) {
+//     this.key = key;
+//   }
+
+// //* Абстрактний метод openDoor відповідає за відкриття дверей і приймає ключ як параметр
+//   abstract openDoor(key: Key): void;
+
+// //* Метод дозволяє людині входити в будинок, якщо двері відкриті
+//   comeIn(person: Person): void {
+//     if (this.door) {
+//       this.tenants.push(person);
+//       console.log(`${person.getKey().getSignature()} entered the house.`);
+//     } else {
+//       console.log("The door is closed. Cannot enter.");
+//     }
+//   }
+// }
+
+// //* Клас MyHouse успадковується від абстрактного класу House і реалізує абстрактний метод openDoor.
+// class MyHouse extends House {
+// //* Метод openDoor відкриває двері, якщо ключ співпадає з ключем, збереженим у класі
+//   openDoor(key: Key): void {
+//     if (key.getSignature() === this.key.getSignature()) {
+//       this.door = true;
+//       console.log("The door is now open.");
+//     } else {
+//       console.log("Invalid key. The door remains closed.");
+//     }
+//   }
+// }
+
+//! Сценарій взаємодії:
+// const key = new Key();          //* Створення об'єкта класу Key.
+// const house = new MyHouse(key); //* Створення об'єкта класу MyHouse з переданим ключем.
+// const person = new Person(key); //* Створення об'єкта класу Person з переданим ключем.
+
+// house.openDoor(person.getKey()); //* Виклик методу openDoor для відкриття дверей.
+// house.comeIn(person);            //* Виклик методу comeIn для того, щоб людина могла увійти в будинок.
