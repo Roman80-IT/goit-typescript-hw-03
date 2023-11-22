@@ -54,7 +54,7 @@ abstract class House {
   // protected tenants: Person[] = []; //* Варіант-1 - явно вказане дефолтне значення при визначенні властивості класу
 
   constructor(protected key: Key) {
-    this.tenants = []; //* Варіант-2 - дефолтне значення в конструкторі
+    this.tenants = []; //* Варіант-2 - дефолтне значення в конструкторі - ініціалізує властивість tenants класу House
   }
 
   comeIn(person: Person): void {
